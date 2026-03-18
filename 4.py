@@ -44,3 +44,4 @@ tk.Button(style_frame, text="파란 버튼", bg="blue", fg="white",font=("맑은
 tk.Button(style_frame, text="초록 버튼", bg="green", fg="white", 
           font=("맑은 고딕", 10, "bold"),
           command=lambda: status_var.set("초록 버튼 클릭!")).pack(side=tk.LEFT, padx=5)
+
