@@ -1,48 +1,9 @@
-'''''
- 간단한 스마트 장바구니(POS) 프로그램
+"""
+SmartCart POS System
+- 장바구니 / 재고 / 매출 관리 프로그램
+- JSON 파일 기반 주간 매출 저장
+"""
 
- - 상품을 장바구니에 담고 결제할 수 있는 프로그램
- - 재고 관리 및 매출 관리 기능 포함
-
- [데이터 구조]
- - products : {상품명: {price, stock}}
- - cart : {상품명: 수량}
- - discount : {상품명: 할인율}
-
- [주요 기능]
- - add() : 상품을 장바구니에 추가
-   → 존재하지 않는 상품이면 신규 등록 + 재고 추가
- - pay() : 결제 처리 및 재고 감소
- - price() : 할인 적용된 가격 계산
- - total() : 장바구니 총 금액 계산
-
- [재고 관리]
- - 상품 재고를 관리하며 결제 시 재고 감소
- - 재고가 부족하면 담기 불가
- - 재고가 5개 남은 상품을 따로 표시
-
- [매출 관리]
- - 결제 금액을 JSON 파일에 저장
- - 최근 7일 데이터만 유지 (주간 매출)
- - 주간 / 월간 / 연간 매출 표시
-
- [관리자 기능]
- - 상품명 검색으로 재고 및 가격 확인
-
- [UI 동작]
- - 상품명과 수량 입력 후 '담기' 버튼으로 장바구니 추가
- - '결제' 버튼 클릭 시 결제 및 영수증 출력
- - 스크롤 가능한 카드형 UI 구성
-
- [동작 흐름]
- - 상품 입력 → 장바구니 담기 → 결제 → 재고 감소 → 매출 저장
-
- [추가 특징]
- - JSON 파일(sales_data.json)을 사용하여 매출 데이터 저장
- - 프로그램 재실행 시 주간 매출 유지
- - 할인 상품은 랜덤으로 설정되어 가격에 자동 반영
-
-'''''
 import flet as ft
 import random
 from datetime import datetime
@@ -65,7 +26,10 @@ items = [
  "양초","성냥","건전지","전구","쓰레기봉투","지퍼백","호일","랩"
 ]
 
+# POS 시스템 핵심 로직 (상품, 장바구니, 매출 관리)
 class SmartCart:
+
+    # 상품 초기화 및 할인 상품 랜덤 설정
     def __init__(self):
         self.products = {i: {"price": random.randint(1000,8000), "stock": random.randint(5,20)} for i in items}
         self.cart = {}
@@ -75,15 +39,18 @@ class SmartCart:
         discount_items = random.sample(items, 5)
         self.discount = {i: random.randint(10,50) for i in discount_items}
 
+    # 할인 적용된 가격 반환
     def price(self, n):
         p = self.products[n]["price"]
         if n in self.discount:
             p -= p * self.discount[n] / 100
         return int(p)
 
+    # 장바구니 총 금액 계산
     def total(self):
         return sum(self.price(n)*q for n,q in self.cart.items())
 
+    # 신규 상품 등록 또는 재고 추가
     def register(self, n, q):
         if n not in self.products:
             self.products[n] = {"price": random.randint(1000,8000), "stock": q}
@@ -92,6 +59,7 @@ class SmartCart:
             self.products[n]["stock"] += q
             return f"{n} 재고 {q}개 추가됨"
 
+    # 장바구니 담기 (재고 체크 포함)
     def add(self, n, q):
         if n not in self.products:
             return "상품 없음 (등록 먼저)"
@@ -100,6 +68,7 @@ class SmartCart:
         self.cart[n] = self.cart.get(n,0) + q
         return "담기 완료"
 
+    # 결제 처리 및 재고 차감
     def pay(self):
         t = self.total()
         for n,q in self.cart.items():
@@ -109,6 +78,7 @@ class SmartCart:
         return t
 
 
+# 매출 데이터를 JSON 파일에 저장 (최근 7일 유지)
 def save_sales(amount):
     data = []
     if os.path.exists(DATA_FILE):
@@ -128,6 +98,7 @@ def save_sales(amount):
         json.dump(new_data, f)
 
 
+# 최근 7일 매출 합계 반환
 def load_weekly():
     if not os.path.exists(DATA_FILE):
         return 0
@@ -138,6 +109,7 @@ def load_weekly():
     return sum(d["amount"] for d in data)
 
 
+# Flet UI 구성 및 이벤트 처리
 def main(page: ft.Page):
 
     cart_sys = SmartCart()
@@ -165,6 +137,7 @@ def main(page: ft.Page):
     error_text = ft.Text(color="red")
     total_text = ft.Text("총합: 0원", size=18, color=BROWN)
 
+    # 장바구니 UI 갱신
     def update():
         cart_view.controls.clear()
         for n,q in cart_sys.cart.items():
@@ -174,6 +147,7 @@ def main(page: ft.Page):
         total_text.value = f"총합: {cart_sys.total()}원"
         page.update()
 
+    # 상품 등록 버튼 이벤트
     def register(e):
         try:
             q = int(qty_input.value)
@@ -186,6 +160,7 @@ def main(page: ft.Page):
         update_low_stock()
         page.update()
 
+    # 장바구니 추가 이벤트
     def add(e):
         try:
             q = int(qty_input.value)
@@ -197,6 +172,7 @@ def main(page: ft.Page):
         error_text.value = cart_sys.add(item_input.value.strip(), q)
         update()
 
+    # 결제 버튼 이벤트
     def pay(e):
         if not cart_sys.cart:
             error_text.value = "장바구니 비어있음"
@@ -207,6 +183,7 @@ def main(page: ft.Page):
         save_sales(t)
         ask_receipt(t)
 
+    # 영수증 출력 여부 선택
     def ask_receipt(t):
         receipt_view.controls.clear()
         receipt_view.controls.append(ft.Text("영수증을 드릴까요?"))
@@ -229,6 +206,7 @@ def main(page: ft.Page):
         )
         page.update()
 
+    # 영수증 UI 출력
     def show_receipt(t):
         receipt_view.controls.clear()
 
@@ -257,6 +235,7 @@ def main(page: ft.Page):
 
         page.update()
 
+    # 상품 검색 (재고 / 가격 확인)
     def update_admin(e=None):
         admin_view.controls.clear()
         key = admin_search.value.strip()
@@ -273,11 +252,13 @@ def main(page: ft.Page):
                 )
         page.update()
 
+    # 매출 정보 UI 갱신
     def update_sales():
         weekly = load_weekly()
         sales_text.value = f"주간매출: {weekly}원 / 월매출: {cart_sys.monthly}원 / 연매출: {cart_sys.yearly}원"
         page.update()
 
+    # 재고 5개 이하 상품 표시
     def update_low_stock():
         low_stock_view.controls.clear()
         for n,v in cart_sys.products.items():
@@ -293,6 +274,7 @@ def main(page: ft.Page):
         border_radius=12
     )
 
+    # 할인 상품 UI 업데이트
     def update_discount():
         col = ft.Column()
         col.controls.append(ft.Text("📢 할인 정보", color=PRIMARY, size=16))
@@ -372,4 +354,5 @@ def main(page: ft.Page):
     update_low_stock()
 
 
+# 앱 실행
 ft.app(target=main)
