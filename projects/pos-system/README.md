@@ -57,12 +57,3 @@ https://www.notion.so/9-4-POS-34df07c99a8980cf94ecf40687c8a299?source=copy_link
 
 ## ⚙️ How to Run
 
-```bash
-pip install flet
-python main.py
-
-🧑‍💻 Author
-Name: 이수진
-GitHub: https://github.com/lsjin0322
-
----
