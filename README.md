@@ -1,62 +1,49 @@
-# 🐍 Python Workspace
-> **"이론은 Notion에서, 구현은 GitHub에서."**  
-> Python의 핵심 개념을 학습하고, 이를 코드로 직접 구현하며 이해를 확장합니다.  
-> 👉 모든 이론 정리는 Notion 아카이브와 함께 연결됩니다.
+📌 Python Workspace
 
----
+Python 기반으로 다양한 기능 구현과 프로젝트를 수행하며,
+코드 구조 설계와 문제 해결 과정을 중심으로 정리한 저장소입니다.
 
-## 📌 Overview
-Python 기초 문법부터 객체지향, 그리고 간단한 프로젝트 구현까지 단계적으로 학습합니다.  
-각 디렉토리는 학습 흐름에 맞게 구성되어 있으며,  
-👉 **개념 → 실습 → 적용** 구조를 따릅니다.
+🚀 Overview
 
----
+이 저장소는 Python의 핵심 개념을 바탕으로
+기능 단위 구현부터 프로젝트 단위까지 확장하며 개발 역량을 쌓기 위해 구성되었습니다.
 
-## 📖 Learning Scope
-- [x] Basic Syntax & Data Types  
-- [x] Control Flow (조건문, 반복문)  
-- [x] Functions & Modules  
-- [x] Object-Oriented Programming (OOP)  
-- [ ] File I/O & Exception Handling  
-- [ ] External Libraries (ex. Flet, NumPy)
+기능 단위 코드 구현
+객체 지향 기반 설계 적용
+프로젝트 단위 로직 구성 및 확장
+🧩 Tech Stack
+Python 3.x
+Standard Library
+pandas, numpy, matplotlib, requests
+📂 Directory Structure
+/basics
+→ 기본 문법 및 데이터 처리
 
----
+/functions
+→ 함수 설계 및 모듈화
 
-## 📂 Directory Structure
+/oop
+→ 객체 지향 프로그래밍
 
-- [/basics](./basics)  
-  → 변수, 자료형, 입출력, 조건문, 반복문  
+/practice
+→ 기능 단위 구현
 
-- [/functions](./functions)  
-  → 함수 정의, 재사용, 모듈화  
-
-- [/oop](./oop)  
-  → 클래스, 상속, 캡슐화  
-
-- [/practice](./practice)  
-  → 작은 기능 단위 구현 연습  
-
-- [/mini-project](./mini-project)  
-  → 실제 프로젝트 (볼링 게임, 계산기 등)
-
----
-
-## 🧩 Key Implementation Focus
-- 문제를 함수 단위로 분리하는 설계 능력  
-- 객체지향 구조로 코드 확장성 확보  
-- 로직을 단계적으로 구성하는 사고 방식  
-
----
-
-## 📘 Deep Dive (Notion)
-👉 [Python 핵심 이론 아카이브 바로가기 ↗️](본인의_노션_링크)
-
-- 개념 설명 (왜 사용하는가)
-- 코드 흐름 분석
-- 추가 예제 및 응용
-
----
-
-## 🚀 How to Run
-```bash
+/mini-project
+→ 프로젝트 구현
+🔥 Key Features
+기능 단위로 분리된 코드 구조
+객체 지향 기반 설계
+문제 해결 중심 구현
+프로젝트 단위 확장 경험
+📌 Projects
+🎳 Bowling Score System
+볼링 점수 계산 로직 구현
+프레임 단위 점수 처리 및 누적 계산
+🧮 Calculator System
+다양한 연산 처리 로직 구현
+입력값 기반 계산 구조 설계
+▶️ How to Run
 python 파일명.py
+📌 Notes
+각 기능 및 프로젝트는 독립적으로 실행 가능하도록 구성되어 있습니다.
+코드 구조 개선 및 기능 확장을 지속적으로 진행하고 있습니다.
