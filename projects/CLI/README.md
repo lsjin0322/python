@@ -10,6 +10,9 @@
 먼저 3승을 달성하는 쪽이 승리하는 게임입니다.
 
 ---
+<img width="639" height="139" alt="image" src="https://github.com/user-attachments/assets/98af0055-3377-4cae-ae94-c7a425bd7876" />
+
+---
 
 ## 🚀 Features
 
