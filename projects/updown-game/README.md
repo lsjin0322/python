@@ -11,6 +11,12 @@
 
 ---
 
+<img width="839" height="388" alt="image" src="https://github.com/user-attachments/assets/c5fdc9fa-3e5b-425b-bb00-dd5fa4f10e31" />
+
+
+
+---
+
 ## 🚀 Features
 
 - 랜덤 숫자 생성 (1~100)
