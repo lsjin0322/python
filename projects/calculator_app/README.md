@@ -105,7 +105,7 @@ python app.py
 | 텍스트 | `#3D3530` 다크 브라운 |
 
 ---
-##미리보기 
+## 미리보기 
 <img width="478" height="662" alt="스크린샷 2026-06-03 145713" src="https://github.com/user-attachments/assets/f96546aa-6250-4c02-9ce4-fc105a4f8e7e" />
 
 ---
